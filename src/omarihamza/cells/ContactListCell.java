@@ -6,30 +6,31 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import omarihamza.models.Contact;
-import omarihamza.models.Group;
 
-public class ContactsListCell extends ListCell<Group> {
-
+public class ContactListCell extends ListCell<Contact> {
 
     private HBox content;
     private Text name;
-    private Text price;
+    private Text phone;
+    private Text email;
 
-    public ContactsListCell() {
+    public ContactListCell() {
         super();
         name = new Text();
-        price = new Text();
-        VBox vBox = new VBox(name, price);
-        content = new HBox(new Label("[Graphic]"), vBox);
+        phone = new Text();
+        email = new Text();
+        VBox vBox = new VBox();
+        content = new HBox(name, phone, email);
         content.setSpacing(10);
     }
 
     @Override
-    protected void updateItem(Group item, boolean empty) {
+    protected void updateItem(Contact item, boolean empty) {
         super.updateItem(item, empty);
         if (item != null && !empty) { // <== test for null item and empty parameter
-            name.setText(item.getTitle());
-            price.setText(String.format("%s", item.getTitle()));
+            name.setText(item.getName());
+            phone.setText(item.getPhone());
+            email.setText(item.getEmail());
             setGraphic(content);
         } else {
             setGraphic(null);
