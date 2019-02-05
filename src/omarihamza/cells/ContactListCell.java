@@ -1,11 +1,20 @@
 package omarihamza.cells;
 
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.MenuItem;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import omarihamza.models.Contact;
+import omarihamza.utils.FileUtils;
+
+import java.util.ArrayList;
 
 public class ContactListCell extends ListCell<Contact> {
 
@@ -19,10 +28,21 @@ public class ContactListCell extends ListCell<Contact> {
         name = new Text();
         phone = new Text();
         email = new Text();
-        VBox vBox = new VBox();
         content = new HBox(name, phone, email);
         content.setSpacing(10);
+
+        ContextMenu contextMenu = new ContextMenu();
+        MenuItem delete = new MenuItem("Delete");
+        delete.setOnAction(e -> {
+
+        });
+        contextMenu.getItems().add(delete);
+        content.setOnContextMenuRequested(event -> {
+            contextMenu.show(content.getParent(), event.getScreenX(), event.getScreenY());
+        });
     }
+
+
 
     @Override
     protected void updateItem(Contact item, boolean empty) {
@@ -36,5 +56,7 @@ public class ContactListCell extends ListCell<Contact> {
             setGraphic(null);
         }
     }
+
+
 
 }

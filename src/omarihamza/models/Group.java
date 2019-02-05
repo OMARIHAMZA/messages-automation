@@ -6,16 +6,26 @@ import java.util.ArrayList;
 
 public class Group implements Serializable {
 
+    private int id;
     private String title;
     private String description;
     private ArrayList<Contact> contacts;
     private boolean isSelected;
 
 
-    public Group(String title, String description, ArrayList<Contact> contacts) {
+    public Group(int id, String title, String description, ArrayList<Contact> contacts) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.contacts = contacts;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDescription() {

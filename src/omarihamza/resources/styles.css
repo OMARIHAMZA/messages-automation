@@ -1,0 +1,30 @@
+/*.list-view .list-cell:even {
+    -fx-background-color: #17212B;
+    -fx-text-fill: white;
+}
+
+.list-view .list-cell:odd {
+    -fx-background-color: #17212B;
+    -fx-text-fill: white;
+}*/
+
+.list-view, .split-pane {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.list-cell .text {
+    /* Default value: */
+    -fx-fill: white ;
+}
+
+.list-cell {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: white;
+}
+
+.list-cell:selected{
+    -fx-background-color: #419FD9;
+    -fx-text-fill: white;
+
+}

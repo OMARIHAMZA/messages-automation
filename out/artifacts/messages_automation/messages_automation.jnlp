@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="messages_automation.jnlp">
+  <information>
+    <title>messages-automation</title>
+    <vendor>Unknown</vendor>
+    <description>messages-automation</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="messages_automation.jar" size="2763328" download="eager" />
+  </resources>
+  <jfx:javafx-desc  width="600" height="400" main-class="omarihamza.Main"  name="messages-automation" />
+  <update check="background"/>
+</jnlp>

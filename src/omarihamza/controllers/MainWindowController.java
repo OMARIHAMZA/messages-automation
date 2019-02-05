@@ -2,6 +2,8 @@ package omarihamza.controllers;
 
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -58,8 +60,15 @@ public class MainWindowController implements Initializable {
         contactsListView.setItems(data);
 
         contactsListView.setCellFactory(listView -> new GroupListCell());
+        contactsListView.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                groupTitleText.setText("");
+            }
+        });
         contactsListView.setOnMouseClicked(event -> {
-            if (contactsListView.getSelectionModel().getSelectedIndex() == -1) return;
+            if (contactsListView.getSelectionModel().getSelectedIndex() == -1) {
+                return;
+            }
             groupTitleText.setText(data.get(contactsListView.getSelectionModel().getSelectedIndex()).getTitle());
         });
 
@@ -99,6 +108,7 @@ public class MainWindowController implements Initializable {
             loader = new FXMLLoader(getClass().getResource("/omarihamza/layouts/GroupInfoDialog.fxml"));
 
             Stage stage = new Stage();
+            if (contactsListView.getSelectionModel().getSelectedIndex() == -1) return;
             stage.setTitle(data.get(contactsListView.getSelectionModel().getSelectedIndex()).getTitle());
             GroupInfoDialogController controller = new GroupInfoDialogController(data.get(contactsListView.getSelectionModel().getSelectedIndex()));
             loader.setController(controller);
@@ -110,10 +120,10 @@ public class MainWindowController implements Initializable {
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(scene);
-            /*stage.setOnHiding(ee -> Platform.runLater(() -> {
+            stage.setOnHiding(ee -> Platform.runLater(() -> {
                 data.setAll(FileUtils.loadGroups());
                 contactsListView.setItems(data);
-            }));*/
+            }));
             stage.show();
 
         });

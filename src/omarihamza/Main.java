@@ -15,7 +15,9 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("layouts/MainWindow.fxml"));
         primaryStage.initStyle(StageStyle.UNDECORATED);
-        primaryStage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/omarihamza/resources/styles.css").toExternalForm());
+        primaryStage.setScene(scene);
         initWindowDrag(root, primaryStage);
         primaryStage.show();
     }

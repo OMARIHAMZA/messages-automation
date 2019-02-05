@@ -71,7 +71,6 @@ public class CreateGroupDialogController implements Initializable {
         });
 
         groupImportButton.setOnAction(e -> {
-
             FXMLLoader loader = null;
             Parent root = null;
             try {
@@ -117,7 +116,7 @@ public class CreateGroupDialogController implements Initializable {
 
             if (checkFields()) {
                 ArrayList<Contact> contacts = new ArrayList<>(data);
-                FileUtils.storeGroup(new Group(groupNameTextField.getText(), groupDescriptionTextArea.getText(), contacts));
+                FileUtils.storeGroup(groupNameTextField.getText(), groupDescriptionTextArea.getText(), contacts);
                 ((Stage) createGroupButton.getScene().getWindow()).close();
             }
 
