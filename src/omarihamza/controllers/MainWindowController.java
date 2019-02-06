@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -20,11 +21,17 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import omarihamza.cells.GroupListCell;
 import omarihamza.dialogs.GroupInfoDialogController;
+import omarihamza.dialogs.MessageDialogController;
+import omarihamza.models.Contact;
 import omarihamza.models.Group;
+import omarihamza.models.Message;
 import omarihamza.utils.FileUtils;
+import omarihamza.utils.Utils;
+import omarihamza.utils.WhatsAppAPI;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class MainWindowController implements Initializable {
@@ -50,7 +57,12 @@ public class MainWindowController implements Initializable {
     @FXML
     private HBox contactsBox, newGroupBox, importBox, settingsBox, logoutBox, groupTitleHBox;
 
+    @FXML
+    private Button sendMessageButton;
+
     private ObservableList<Group> data = FXCollections.observableArrayList();
+
+    private WhatsAppAPI whatsAppAPI;
 
 
     @Override
@@ -63,6 +75,7 @@ public class MainWindowController implements Initializable {
         contactsListView.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 groupTitleText.setText("");
+                sendMessageButton.setVisible(false);
             }
         });
         contactsListView.setOnMouseClicked(event -> {
@@ -70,11 +83,17 @@ public class MainWindowController implements Initializable {
                 return;
             }
             groupTitleText.setText(data.get(contactsListView.getSelectionModel().getSelectedIndex()).getTitle());
+            sendMessageButton.setVisible(true);
         });
 
         exitText.setOnMouseClicked(e -> Platform.exit());
 
         assignActions();
+
+        sendMessageButton.setVisible(false);
+
+//        Platform.runLater(() -> new Thread(() -> whatsAppAPI = new WhatsAppAPI()).start());
+
     }
 
     private void assignActions() {
@@ -125,8 +144,56 @@ public class MainWindowController implements Initializable {
                 contactsListView.setItems(data);
             }));
             stage.show();
-
         });
 
+        sendMessageButton.setOnAction(e -> {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/omarihamza/layouts/MessageDialog.fxml"));
+            Utils.createDialog(loader, "Send Message", ee -> {
+
+                MessageDialogController controller = loader.getController();
+                Message message = controller.getMessage();
+                if (message != null) {
+
+                    switch (message.getType()) {
+
+                        case SMS: {
+
+                            break;
+                        }
+
+                        case Email: {
+
+                            break;
+                        }
+
+                        case Viber: {
+
+                            break;
+                        }
+
+                        case WhatsApp: {
+                            sendWhatsAppMessage(message);
+                            break;
+                        }
+                    }
+
+
+                }
+
+            });
+        });
+
+
+    }
+
+    private void sendWhatsAppMessage(Message message) {
+
+        HashMap<String, String> hashMap = new HashMap<>();
+
+        for (Contact contact : data.get(contactsListView.getSelectionModel().getSelectedIndex()).getContacts()) {
+            hashMap.put(contact.getPhone(), message.getBody());
+        }
+
+        Platform.runLater(() -> new Thread(() -> WhatsAppAPI.getInstance().sendMessages(hashMap)).start());
     }
 }

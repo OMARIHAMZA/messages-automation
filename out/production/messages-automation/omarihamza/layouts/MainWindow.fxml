@@ -217,7 +217,7 @@
                           <children>
                               <HBox alignment="CENTER_RIGHT">
                                   <children>
-                                      <JFXButton mnemonicParsing="false" ripplerFill="WHITE" style="-fx-background-color: #276899;" text="Send Message" textFill="WHITE">
+                                      <JFXButton fx:id="sendMessageButton" mnemonicParsing="false" ripplerFill="WHITE" style="-fx-background-color: #276899;" text="Send Message" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="10.0" top="10.0" />
                                  </HBox.margin>
