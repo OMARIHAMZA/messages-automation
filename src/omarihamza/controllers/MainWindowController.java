@@ -1,5 +1,6 @@
 package omarihamza.controllers;
 
+import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -11,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -20,19 +22,26 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import omarihamza.cells.GroupListCell;
+import omarihamza.cells.HistoryListCell;
 import omarihamza.dialogs.GroupInfoDialogController;
 import omarihamza.dialogs.MessageDialogController;
 import omarihamza.models.Contact;
 import omarihamza.models.Group;
 import omarihamza.models.Message;
+import omarihamza.models.MessageType;
+import omarihamza.utils.EmailAPI;
 import omarihamza.utils.FileUtils;
 import omarihamza.utils.Utils;
 import omarihamza.utils.WhatsAppAPI;
 
+import javax.mail.internet.AddressException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainWindowController implements Initializable {
 
@@ -44,6 +53,9 @@ public class MainWindowController implements Initializable {
 
     @FXML
     private ListView contactsListView;
+
+    @FXML
+    private JFXListView historyListView;
 
     @FXML
     private TextField searchTextField;
@@ -62,9 +74,7 @@ public class MainWindowController implements Initializable {
 
     private ObservableList<Group> data = FXCollections.observableArrayList();
 
-    private WhatsAppAPI whatsAppAPI;
-
-
+    @SuppressWarnings("ALL")
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -92,7 +102,15 @@ public class MainWindowController implements Initializable {
 
         sendMessageButton.setVisible(false);
 
-//        Platform.runLater(() -> new Thread(() -> whatsAppAPI = new WhatsAppAPI()).start());
+        ObservableList<Message> messages = FXCollections.observableArrayList();
+
+        messages.add(new Message("Title", "body", MessageType.Email));
+        messages.add(new Message("Title", "body", MessageType.Email));
+        messages.add(new Message("Title", "body", MessageType.SMS));
+        messages.add(new Message("Title", "body", MessageType.WhatsApp));
+
+        historyListView.setItems(messages);
+        historyListView.setCellFactory(listView -> new HistoryListCell());
 
     }
 
@@ -104,6 +122,7 @@ public class MainWindowController implements Initializable {
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
+            //noinspection all
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setTitle("Create Group");
@@ -111,13 +130,10 @@ public class MainWindowController implements Initializable {
             stage.setScene(scene);
             stage.setOnHiding(ee -> Platform.runLater(() -> {
                 data.setAll(FileUtils.loadGroups());
+                //noinspection all
                 contactsListView.setItems(data);
             }));
             stage.showAndWait();
-            /*Group group = new Group("Test-" + new Random().nextInt(100), null);
-            data.setAll(FileUtils.storeGroup(group));
-            contactsListView.setItems(data);*/
-
         });
 
         groupTitleHBox.setOnMouseClicked(e -> {
@@ -136,11 +152,13 @@ public class MainWindowController implements Initializable {
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
+            //noinspection all
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(scene);
             stage.setOnHiding(ee -> Platform.runLater(() -> {
                 data.setAll(FileUtils.loadGroups());
+                //noinspection all
                 contactsListView.setItems(data);
             }));
             stage.show();
@@ -162,7 +180,7 @@ public class MainWindowController implements Initializable {
                         }
 
                         case Email: {
-
+                            sendEmail(message);
                             break;
                         }
 
@@ -184,6 +202,29 @@ public class MainWindowController implements Initializable {
         });
 
 
+    }
+
+    private void sendEmail(Message message) {
+
+        ArrayList<String> recipients = new ArrayList<>();
+        Pattern p = Pattern.compile(".+@.+\\..+");
+
+        for (Contact contact : data.get(contactsListView.getSelectionModel().getSelectedIndex()).getContacts()) {
+            Matcher m = p.matcher(contact.getEmail());
+            if (m.matches())
+                recipients.add(contact.getEmail());
+        }
+
+        if (recipients.isEmpty()) {
+            Utils.showPopup("Error", "There are no recipients", Alert.AlertType.ERROR);
+            return;
+        }
+
+        try {
+            EmailAPI.sendEmail("omarihamza@outlook.com", "Hamzahamza97", message.getTitle(), message.getBody(), recipients);
+        } catch (AddressException e) {
+            e.printStackTrace();
+        }
     }
 
     private void sendWhatsAppMessage(Message message) {

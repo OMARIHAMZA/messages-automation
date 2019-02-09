@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
@@ -167,7 +168,7 @@
             </HBox>
             </children>
         </VBox>
-        <VBox layoutX="400.0" layoutY="40.0" prefHeight="460.0" prefWidth="400.0" style="-fx-background-color: #E9EDF0;">
+        <VBox layoutX="397.0" layoutY="40.0" prefHeight="460.0" prefWidth="400.0" style="-fx-background-color: #E9EDF0;">
             <children>
                 <HBox fx:id="groupTitleHBox" alignment="CENTER" prefHeight="63.0" prefWidth="400.0" style="-fx-background-color: #F1F1F1;">
                     <children>
@@ -215,7 +216,8 @@
                <children>
                       <VBox alignment="BOTTOM_CENTER" prefHeight="409.0" prefWidth="400.0" style="-fx-background-color: #ffffff;">
                           <children>
-                              <HBox alignment="CENTER_RIGHT">
+                        <JFXListView fx:id="historyListView" prefHeight="370.0" prefWidth="400.0" />
+                              <HBox alignment="CENTER_RIGHT" prefHeight="60.0">
                                   <children>
                                       <JFXButton fx:id="sendMessageButton" mnemonicParsing="false" ripplerFill="WHITE" style="-fx-background-color: #276899;" text="Send Message" textFill="WHITE">
                                  <HBox.margin>
@@ -224,7 +226,7 @@
                               </JFXButton>
                                   </children>
                                   <VBox.margin>
-                                      <Insets left="20.0" right="20.0" top="10.0" />
+                                      <Insets left="20.0" right="20.0" />
                                   </VBox.margin>
                               </HBox>
                           </children>
