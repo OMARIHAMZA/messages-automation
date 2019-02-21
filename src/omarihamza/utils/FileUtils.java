@@ -1,12 +1,12 @@
 package omarihamza.utils;
 
 import com.sun.istack.internal.Nullable;
+import omarihamza.models.AppSettings;
 import omarihamza.models.Contact;
 import omarihamza.models.Group;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class FileUtils {
 
@@ -73,5 +73,31 @@ public class FileUtils {
         }
     }
 
+
+    public static AppSettings loadSettings() {
+        File file = new File("data2.bin");
+        AppSettings appSettings;
+        try {
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file));
+            appSettings = (AppSettings) objectInputStream.readObject();
+            objectInputStream.close();
+            return appSettings;
+        } catch (IOException | ClassNotFoundException e) {
+            return null;
+        }
+    }
+
+
+    public static void storeSettings(AppSettings settings){
+        File file = new File("data2.bin");
+        try {
+            file.createNewFile();
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(file));
+            objectOutputStream.writeObject(settings);
+            objectOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

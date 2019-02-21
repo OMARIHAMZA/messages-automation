@@ -44,6 +44,7 @@ public class HistoryListCell extends ListCell<Message> {
         content = new VBox();
         content.getChildren().addAll(title, body, hBox);
 
+//        content.setBackground(new BackgroundImage());
         content.setBackground(new Background(new BackgroundFill(Paint.valueOf(Color.WHITE.toString()), new CornerRadii(10), Insets.EMPTY)));
         content.setPadding(new Insets(5));
         content.setBorder(new Border(new BorderStroke(Paint.valueOf("#000000"), BorderStrokeStyle.SOLID, new CornerRadii(10), new BorderWidths(0.1))));

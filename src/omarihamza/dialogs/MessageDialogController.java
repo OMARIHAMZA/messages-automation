@@ -27,8 +27,6 @@ public class MessageDialogController implements Initializable {
     @FXML
     private JFXRadioButton whatsAppRadioButton;
 
-    @FXML
-    private JFXRadioButton viberRadioButton;
 
     @FXML
     private JFXRadioButton emailRadioButton;
@@ -61,7 +59,6 @@ public class MessageDialogController implements Initializable {
         //RadioButtons
         toggleGroup = new ToggleGroup();
         whatsAppRadioButton.setToggleGroup(toggleGroup);
-        viberRadioButton.setToggleGroup(toggleGroup);
         smsRadioButton.setToggleGroup(toggleGroup);
         emailRadioButton.setToggleGroup(toggleGroup);
 

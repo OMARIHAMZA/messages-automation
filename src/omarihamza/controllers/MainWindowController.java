@@ -23,12 +23,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import omarihamza.cells.GroupListCell;
 import omarihamza.cells.HistoryListCell;
+import omarihamza.dialogs.CredentialsDialogController;
 import omarihamza.dialogs.GroupInfoDialogController;
 import omarihamza.dialogs.MessageDialogController;
-import omarihamza.models.Contact;
-import omarihamza.models.Group;
-import omarihamza.models.Message;
-import omarihamza.models.MessageType;
+import omarihamza.dialogs.SettingsController;
+import omarihamza.models.*;
 import omarihamza.utils.EmailAPI;
 import omarihamza.utils.FileUtils;
 import omarihamza.utils.Utils;
@@ -104,13 +103,8 @@ public class MainWindowController implements Initializable {
 
         ObservableList<Message> messages = FXCollections.observableArrayList();
 
-        messages.add(new Message("Title", "body", MessageType.Email));
-        messages.add(new Message("Title", "body", MessageType.Email));
-        messages.add(new Message("Title", "body", MessageType.SMS));
-        messages.add(new Message("Title", "body", MessageType.WhatsApp));
-
-        historyListView.setItems(messages);
-        historyListView.setCellFactory(listView -> new HistoryListCell());
+//        historyListView.setItems(messages);
+//        historyListView.setCellFactory(listView -> new HistoryListCell());
 
     }
 
@@ -201,30 +195,94 @@ public class MainWindowController implements Initializable {
             });
         });
 
+        settingsBox.setOnMouseClicked(e -> {
+            Parent root = null;
+            FXMLLoader loader;
+            loader = new FXMLLoader(getClass().getResource("/omarihamza/layouts/SettingsDialog.fxml"));
+
+            Stage stage = new Stage();
+            omarihamza.dialogs.SettingsController settingsController = new SettingsController();
+            loader.setController(settingsController);
+            try {
+                root = loader.load();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            //noinspection all
+            Scene scene = new Scene(root);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene);
+            stage.show();
+        });
+
 
     }
 
     private void sendEmail(Message message) {
 
-        ArrayList<String> recipients = new ArrayList<>();
-        Pattern p = Pattern.compile(".+@.+\\..+");
+        StringBuilder email = new StringBuilder();
+        StringBuilder password = new StringBuilder();
 
-        for (Contact contact : data.get(contactsListView.getSelectionModel().getSelectedIndex()).getContacts()) {
-            Matcher m = p.matcher(contact.getEmail());
-            if (m.matches())
-                recipients.add(contact.getEmail());
-        }
+        Parent root = null;
+        FXMLLoader loader;
+        loader = new FXMLLoader(getClass().getResource("/omarihamza/layouts/CredentialsDialog.fxml"));
 
-        if (recipients.isEmpty()) {
-            Utils.showPopup("Error", "There are no recipients", Alert.AlertType.ERROR);
+        Stage stage = new Stage();
+        if (contactsListView.getSelectionModel().getSelectedIndex() == -1) return;
+
+        AppSettings appSettings = FileUtils.loadSettings();
+        if (appSettings == null || appSettings.getHost() == null || appSettings.getPort() == null) {
+            Utils.showPopup("Error", "Please set the host and port from Settings.", Alert.AlertType.ERROR);
             return;
         }
 
+        stage.setTitle(data.get(contactsListView.getSelectionModel().getSelectedIndex()).getTitle());
+        CredentialsDialogController controller = new CredentialsDialogController();
+        loader.setController(controller);
         try {
-            EmailAPI.sendEmail("omarihamza@outlook.com", "Hamzahamza97", message.getTitle(), message.getBody(), recipients);
-        } catch (AddressException e) {
-            e.printStackTrace();
+            root = loader.load();
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
+        //noinspection all
+        Scene scene = new Scene(root);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.setOnHiding(ee -> Platform.runLater(() -> {
+
+            if (controller.isLogin()) {
+                Utils.showPopup("Sending Email", "Please wait...", Alert.AlertType.INFORMATION);
+            } else {
+                return;
+            }
+
+            email.append(controller.getCredentials().split(" ")[0]);
+            password.append(controller.getCredentials().split(" ")[1]);
+
+            ArrayList<String> recipients = new ArrayList<>();
+            Pattern p = Pattern.compile(".+@.+\\..+");
+
+            for (Contact contact : data.get(contactsListView.getSelectionModel().getSelectedIndex()).getContacts()) {
+                Matcher m = p.matcher(contact.getEmail());
+                if (m.matches())
+                    recipients.add(contact.getEmail());
+            }
+
+            if (recipients.isEmpty()) {
+                Utils.showPopup("Error", "There are no recipients", Alert.AlertType.ERROR);
+                return;
+            }
+
+            try {
+                EmailAPI.sendEmail(email.toString(), password.toString(), message.getTitle(), message.getBody(), recipients);
+            } catch (AddressException e) {
+                e.printStackTrace();
+            }
+        }));
+
+        stage.showAndWait();
+
+
     }
 
     private void sendWhatsAppMessage(Message message) {

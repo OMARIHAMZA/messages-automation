@@ -16,7 +16,16 @@
       <element id="archive" name="messages_automation.jar">
         <element id="module-output" name="messages-automation" />
       </element>
-      <element id="extracted-dir" path="$USER_HOME$/Downloads/jfoenix-8.0.8.jar" path-in-jar="/" />
+      <element id="file-copy" path="$USER_HOME$/Downloads/activation-1.1.1.jar" />
+      <element id="file-copy" path="$USER_HOME$/Desktop/libs/byte-buddy-1.8.15.jar" />
+      <element id="file-copy" path="$USER_HOME$/Desktop/client-combined-3.141.59.jar" />
+      <element id="file-copy" path="$USER_HOME$/Desktop/libs/commons-exec-1.3.jar" />
+      <element id="file-copy" path="$USER_HOME$/Desktop/libs/guava-25.0-jre.jar" />
+      <element id="file-copy" path="$USER_HOME$/Desktop/java-mail-1.4.4.jar" />
+      <element id="file-copy" path="$USER_HOME$/Downloads/jfoenix-8.0.8.jar" />
+      <element id="file-copy" path="$USER_HOME$/Desktop/libs/okhttp-3.11.0.jar" />
+      <element id="file-copy" path="$USER_HOME$/Desktop/libs/okio-1.14.0.jar" />
+      <element id="file-copy" path="$USER_HOME$/Downloads/retrofit-2.5.0.jar" />
     </root>
   </artifact>
 </component>

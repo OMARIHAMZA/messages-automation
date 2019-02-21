@@ -1,6 +1,7 @@
 package omarihamza.utils;
 
 import javafx.scene.control.Alert;
+import omarihamza.models.AppSettings;
 
 import javax.mail.*;
 import javax.mail.internet.AddressException;
@@ -13,7 +14,9 @@ public class EmailAPI {
 
 
     public static void sendEmail(String email, String password, String title, String body, ArrayList<String> recipients) throws AddressException {
-        String host = "outlook.office365.com";
+
+
+        AppSettings appSettings = FileUtils.loadSettings();
 
         Address[] to = new Address[recipients.size()];
 
@@ -23,10 +26,10 @@ public class EmailAPI {
 
         //Get the session object
         Properties props = new Properties();
-        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.host", appSettings.getHost());
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.port", appSettings.getPort());
 
 
         Session session = Session.getDefaultInstance(props,
@@ -51,7 +54,7 @@ public class EmailAPI {
 
         } catch (MessagingException e) {
             e.printStackTrace();
-            Utils.showPopup("Error", "Email was not sent.", Alert.AlertType.ERROR);
+            Utils.showPopup("Error", "Email was not sent.\n" + e.getMessage(), Alert.AlertType.ERROR);
 
         }
     }

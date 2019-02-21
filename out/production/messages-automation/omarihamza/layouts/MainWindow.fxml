@@ -94,7 +94,7 @@
                             <children>
                                 <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../resources/settings.png" />
+                                        <Image url="@../resources/m_settings.png" />
                                     </image>
                                 </ImageView>
                                 <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" textAlignment="CENTER">

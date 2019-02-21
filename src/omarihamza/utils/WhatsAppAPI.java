@@ -2,14 +2,16 @@ package omarihamza.utils;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
-import org.openqa.selenium.*;
+import omarihamza.models.AppSettings;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -20,12 +22,14 @@ public class WhatsAppAPI {
 
     private static WhatsAppAPI whatsAppAPI = null;
     private ChromeDriver mDriver;
-    private static final String DRIVER_LOCATION = "C:\\chromedriver.exe";
+    private static final String DRIVER_LOCATION = "c://chromedriver.exe";
     private static final String DRIVER_NAME = "webdriver.chrome.driver";
     private static boolean isBrowserOpen = false;
+    private int timeout;
 
     private WhatsAppAPI() {
-
+        AppSettings appSettings = FileUtils.loadSettings();
+        timeout = appSettings == null ? 60 : appSettings.getWhatsAppTimeout();
     }
 
     private void openBrowser() {
@@ -36,7 +40,7 @@ public class WhatsAppAPI {
                 mDriver = new ChromeDriver();
                 mDriver.get("https://web.whatsapp.com/");
                 mDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-                WebDriverWait wait = new WebDriverWait(mDriver, 60);
+                WebDriverWait wait = new WebDriverWait(mDriver, timeout);
                 wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("side")));
                 break;
             } catch (Exception e) {
@@ -59,14 +63,13 @@ public class WhatsAppAPI {
         closeAlertDialogIfExists();
         boolean shouldContinue = false;
         for (HashMap.Entry<String, String> entry : messages.entrySet()) {
-            System.out.println("I'm in " + entry.getKey());
             String number = entry.getKey();
             String message = entry.getValue();
             mDriver.get("https://web.whatsapp.com/send?phone=" + number);
             while (true) {
                 try {
                     mDriver.get("https://web.whatsapp.com/send?phone=" + number);
-                    WebDriverWait wait = new WebDriverWait(mDriver, 60);
+                    WebDriverWait wait = new WebDriverWait(mDriver, timeout);
                     wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"main\"]/footer/div[1]/div[2]/div/div[2]")));
                     break;
                 } catch (Exception e) {
@@ -138,9 +141,7 @@ public class WhatsAppAPI {
                 WebDriverWait wait3 = new WebDriverWait(mDriver, 1);
                 wait3.until(ExpectedConditions.alertIsPresent());
                 mDriver.switchTo().alert().dismiss();
-                System.out.println("ALERT-");
             } catch (Exception e) {
-                System.out.println("NO ALERT-");
                 break;
             }
         }
