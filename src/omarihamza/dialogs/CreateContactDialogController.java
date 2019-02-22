@@ -16,6 +16,9 @@ import java.util.ResourceBundle;
 public class CreateContactDialogController implements Initializable {
 
     @FXML
+    private JFXTextField apartmentNumberTextField;
+
+    @FXML
     private JFXTextField nameTextField;
 
     @FXML
@@ -50,6 +53,8 @@ public class CreateContactDialogController implements Initializable {
 
         phoneTextField.setOnMouseClicked(e -> phoneTextField.setUnFocusColor(Paint.valueOf("#14a4e4")));
 
+        apartmentNumberTextField.setOnMouseClicked(e -> apartmentNumberTextField.setUnFocusColor(Paint.valueOf("#14a4e4")));
+
     }
 
     private boolean checkFields() {
@@ -66,12 +71,17 @@ public class CreateContactDialogController implements Initializable {
             fieldsFilled = false;
         }
 
+        if (apartmentNumberTextField.getText().isEmpty()) {
+            apartmentNumberTextField.setUnFocusColor(Color.RED);
+            fieldsFilled = false;
+        }
+
         return fieldsFilled;
     }
 
     public Contact getContact() {
         if (contactCreated)
-            return new Contact(nameTextField.getText(), phoneTextField.getText(), emailTextField.getText());
+            return new Contact(nameTextField.getText(), phoneTextField.getText(), emailTextField.getText(), apartmentNumberTextField.getText());
         else
             return null;
     }

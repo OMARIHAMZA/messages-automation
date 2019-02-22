@@ -2,10 +2,8 @@ package omarihamza.cells;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import omarihamza.models.Message;
@@ -17,6 +15,7 @@ public class HistoryListCell extends ListCell<Message> {
     private VBox content;
     private StackPane hBox;
     private Text title, body, type, date;
+    private boolean isRemoved = false;
 
     public HistoryListCell() {
 
@@ -25,7 +24,12 @@ public class HistoryListCell extends ListCell<Message> {
         type = new Text();
         date = new Text();
 
-        date.setStyle("-fx-fill: gray; -fx-font-size: 9");
+        title.setStyle("-fx-fill: white;");
+        body.setStyle("-fx-fill: white;");
+        type.setStyle("-fx-fill: white;");
+        date.setStyle("-fx-fill: white;");
+
+        date.setStyle("-fx-fill: gray; -fx-font-size: 12; -fx-end-margin: 12");
 
         hBox = new StackPane();
         HBox typeBox = new HBox();
@@ -39,15 +43,16 @@ public class HistoryListCell extends ListCell<Message> {
         dateBox.getChildren().add(date);
 
 
-        hBox.getChildren().addAll(typeBox, dateBox);
+        hBox.getChildren().addAll(typeBox);
 
-        content = new VBox();
-        content.getChildren().addAll(title, body, hBox);
-
-//        content.setBackground(new BackgroundImage());
-        content.setBackground(new Background(new BackgroundFill(Paint.valueOf(Color.WHITE.toString()), new CornerRadii(10), Insets.EMPTY)));
-        content.setPadding(new Insets(5));
-        content.setBorder(new Border(new BorderStroke(Paint.valueOf("#000000"), BorderStrokeStyle.SOLID, new CornerRadii(10), new BorderWidths(0.1))));
+        VBox mVBox = new VBox(10);
+        mVBox.getChildren().addAll(title, body, hBox);
+        mVBox.setBackground(new Background(new BackgroundFill(Paint.valueOf("#419FD9"), new CornerRadii(10, 10, 10, 0, false), Insets.EMPTY)));
+        mVBox.setPadding(new Insets(5));
+        mVBox.setBorder(new Border(new BorderStroke(Paint.valueOf("#419FD9"), BorderStrokeStyle.SOLID, new CornerRadii(10, 10, 10, 0, false), new BorderWidths(0.1))));
+        mVBox.setFillWidth(true);
+        content = new VBox(5);
+        content.getChildren().addAll(mVBox, dateBox);
         content.setFillWidth(true);
 
     }
@@ -58,11 +63,14 @@ public class HistoryListCell extends ListCell<Message> {
         if (item != null && !empty) { // <== test for null item and empty parameter
             title.setText(item.getTitle());
             body.setText(item.getBody());
-            date.setText("1-1-2018 20:00");
+            if (item.getTitle() == null && !isRemoved) {
+                isRemoved = true;
+                ((VBox) content.getChildren().get(0)).getChildren().remove(0);
+            }
+            date.setText(item.getDate());
             type.setText("• Type: " + item.getType().toString() + " \t\t\t");
             switch (item.getType()) {
                 case WhatsApp: {
-                    type.setStyle("-fx-fill: forestgreen; -fx-font-style:italic ");
                     break;
                 }
 
@@ -71,7 +79,6 @@ public class HistoryListCell extends ListCell<Message> {
                 }
 
                 case Email: {
-                    type.setStyle("-fx-fill: firebrick; -fx-font-style: italic");
                     break;
                 }
 

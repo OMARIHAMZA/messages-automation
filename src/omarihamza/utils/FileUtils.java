@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class FileUtils {
 
-    private static final String FILE_NAME = "data.bin";
+    public static final String FILE_NAME = "data.bin";
 
     @Nullable
     public static ArrayList<Group> loadGroups() {
@@ -47,6 +47,7 @@ public class FileUtils {
         for (Group group1 : groups) {
             if (group.getId() == group1.getId()) {
                 group1.setContacts(group.getContacts());
+                group1.setMessages(group.getMessages());
                 break;
             }
         }
@@ -58,7 +59,7 @@ public class FileUtils {
     }
 
 
-    private static void storeGroups(ArrayList<Group> groups, File file) {
+    public static void storeGroups(ArrayList<Group> groups, File file) {
         try {
             file.createNewFile();
             FileOutputStream fileOutputStream = new FileOutputStream(file);

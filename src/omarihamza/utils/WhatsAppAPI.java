@@ -2,7 +2,11 @@ package omarihamza.utils;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
+import omarihamza.callbacks.RefreshHistoryCallback;
 import omarihamza.models.AppSettings;
+import omarihamza.models.Group;
+import omarihamza.models.Message;
+import omarihamza.models.MessageType;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -15,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -57,7 +62,8 @@ public class WhatsAppAPI {
         return whatsAppAPI;
     }
 
-    public void sendMessages(HashMap<String, String> messages) {
+    public void sendMessages(Group group, HashMap<String, String> messages, RefreshHistoryCallback historyCallback) {
+        String mMessage = "";
         if (!isBrowserOpen) openBrowser();
         ArrayList<String> invalidContacts = new ArrayList<>();
         closeAlertDialogIfExists();
@@ -109,19 +115,36 @@ public class WhatsAppAPI {
                 }
             }
             inputBox.sendKeys(Keys.ENTER);
+            mMessage = message;
         }
+
+
+        group.getMessages().add(new Message(null, mMessage, MessageType.WhatsApp));
+        FileUtils.updateGroup(group);
+        Platform.runLater(historyCallback::refreshHistory);
 
         if (!invalidContacts.isEmpty()) {
             File file = new File(System.getProperty("user.home") + "/Desktop/invalid_whatsapp_contacts.txt");
             try {
                 file.createNewFile();
-                StringBuilder contacts = new StringBuilder();
+                StringBuilder fileContent = new StringBuilder();
+                fileContent.append("Message Date: ").append(Calendar.getInstance().getTime());
+                fileContent.append(System.getProperty("line.separator"));
+                fileContent.append("---------");
+                fileContent.append(System.getProperty("line.separator"));
+                fileContent.append("Message Text: ").append(mMessage);
+                fileContent.append(System.getProperty("line.separator"));
+                fileContent.append("---------");
+                fileContent.append(System.getProperty("line.separator"));
+                fileContent.append("Contacts " + "(Total: ").append(invalidContacts.size()).append("):");
+                fileContent.append(System.getProperty("line.separator"));
+
                 for (String s : invalidContacts) {
-                    contacts.append(s);
-                    contacts.append(System.getProperty("line.separator"));
+                    fileContent.append(s);
+                    fileContent.append(System.getProperty("line.separator"));
                 }
                 PrintWriter writer = new PrintWriter(file);
-                writer.write(contacts.toString());
+                writer.write(fileContent.toString());
                 writer.close();
             } catch (IOException e) {
                 e.printStackTrace();

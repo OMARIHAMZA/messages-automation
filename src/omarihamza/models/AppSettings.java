@@ -8,6 +8,7 @@ public class AppSettings implements Serializable {
     private boolean rememberUserEmail;
     private String host, port;
     private int whatsAppTimeout;
+    private String nameColumn, phoneColumn, emailColumn, apartmentColumn;
 
     public AppSettings(String userEmail, boolean rememberUserEmail, String host, String port, int whatsAppTimeout) {
         this.userEmail = userEmail;
@@ -18,6 +19,38 @@ public class AppSettings implements Serializable {
     }
 
     public AppSettings() {
+    }
+
+    public String getNameColumn() {
+        return nameColumn;
+    }
+
+    public void setNameColumn(String nameColumn) {
+        this.nameColumn = nameColumn;
+    }
+
+    public String getPhoneColumn() {
+        return phoneColumn;
+    }
+
+    public void setPhoneColumn(String phoneColumn) {
+        this.phoneColumn = phoneColumn;
+    }
+
+    public String getEmailColumn() {
+        return emailColumn;
+    }
+
+    public void setEmailColumn(String emailColumn) {
+        this.emailColumn = emailColumn;
+    }
+
+    public String getApartmentColumn() {
+        return apartmentColumn;
+    }
+
+    public void setApartmentColumn(String apartmentColumn) {
+        this.apartmentColumn = apartmentColumn;
     }
 
     public int getWhatsAppTimeout() {

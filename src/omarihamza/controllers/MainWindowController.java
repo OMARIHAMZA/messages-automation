@@ -7,20 +7,24 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import omarihamza.callbacks.DeleteGroupCallback;
+import omarihamza.callbacks.RefreshHistoryCallback;
 import omarihamza.cells.GroupListCell;
 import omarihamza.cells.HistoryListCell;
 import omarihamza.dialogs.CredentialsDialogController;
@@ -34,13 +38,14 @@ import omarihamza.utils.Utils;
 import omarihamza.utils.WhatsAppAPI;
 
 import javax.mail.internet.AddressException;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static omarihamza.utils.FileUtils.FILE_NAME;
 
 public class MainWindowController implements Initializable {
 
@@ -71,6 +76,9 @@ public class MainWindowController implements Initializable {
     @FXML
     private Button sendMessageButton;
 
+    @FXML
+    private HBox dotsImageHbox;
+
     private ObservableList<Group> data = FXCollections.observableArrayList();
 
     @SuppressWarnings("ALL")
@@ -80,11 +88,26 @@ public class MainWindowController implements Initializable {
         data.addAll(FileUtils.loadGroups());
         contactsListView.setItems(data);
 
-        contactsListView.setCellFactory(listView -> new GroupListCell());
+        contactsListView.setCellFactory(listView -> new GroupListCell(new DeleteGroupCallback() {
+            @Override
+            public void deleteGroup(int index) {
+                if (index != -1) {
+                    Optional<ButtonType> result = Utils.showConfirmationDialog("Warning", "Are you sure you want to delete \"" + data.get(index).getTitle() + "\" Group? ");
+                    if (result.get() == ButtonType.OK) {
+                        data.remove(index);
+                        FileUtils.storeGroups(new ArrayList<>(data), new File(FILE_NAME));
+                        contactsListView.setItems(null);
+                        contactsListView.setItems(data);
+                    }
+                }
+            }
+        }));
         contactsListView.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 groupTitleText.setText("");
+                dotsImageHbox.setVisible(false);
                 sendMessageButton.setVisible(false);
+                historyListView.setItems(null);
             }
         });
         contactsListView.setOnMouseClicked(event -> {
@@ -92,20 +115,27 @@ public class MainWindowController implements Initializable {
                 return;
             }
             groupTitleText.setText(data.get(contactsListView.getSelectionModel().getSelectedIndex()).getTitle());
+            ObservableList<Message> messages = FXCollections.observableArrayList();
+            messages.addAll(data.get(contactsListView.getSelectionModel().getSelectedIndex()).getMessages());
+            Collections.reverse(messages);
+            historyListView.setItems(messages);
+            historyListView.setCellFactory(listView -> new HistoryListCell());
+            dotsImageHbox.setVisible(true);
             sendMessageButton.setVisible(true);
         });
 
         exitText.setOnMouseClicked(e -> Platform.exit());
-
         assignActions();
-
         sendMessageButton.setVisible(false);
+        dotsImageHbox.setVisible(false);
+        historyListView.setVisible(true);
+        historyListView.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
 
-        ObservableList<Message> messages = FXCollections.observableArrayList();
-
-//        historyListView.setItems(messages);
-//        historyListView.setCellFactory(listView -> new HistoryListCell());
-
+            @Override
+            public void handle(MouseEvent event) {
+                event.consume();
+            }
+        });
     }
 
     private void assignActions() {
@@ -169,7 +199,10 @@ public class MainWindowController implements Initializable {
                     switch (message.getType()) {
 
                         case SMS: {
-
+                            if (contactsListView.getSelectionModel().getSelectedIndex() == -1) return;
+                            data.get(contactsListView.getSelectionModel().getSelectedIndex()).getMessages().add(message);
+                            FileUtils.updateGroup(data.get(contactsListView.getSelectionModel().getSelectedIndex()));
+                            updateHistory();
                             break;
                         }
 
@@ -220,6 +253,7 @@ public class MainWindowController implements Initializable {
 
     private void sendEmail(Message message) {
 
+        Stage mStage = new Stage();
         StringBuilder email = new StringBuilder();
         StringBuilder password = new StringBuilder();
 
@@ -249,9 +283,8 @@ public class MainWindowController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.setOnHiding(ee -> Platform.runLater(() -> {
-
             if (controller.isLogin()) {
-                Utils.showPopup("Sending Email", "Please wait...", Alert.AlertType.INFORMATION);
+                Utils.showPopup("Sending Email...", "This Process will take some time,\nPress OK and wait for your email to be sent!", Alert.AlertType.INFORMATION);
             } else {
                 return;
             }
@@ -274,7 +307,7 @@ public class MainWindowController implements Initializable {
             }
 
             try {
-                EmailAPI.sendEmail(email.toString(), password.toString(), message.getTitle(), message.getBody(), recipients);
+                EmailAPI.sendEmail(data.get(contactsListView.getSelectionModel().getSelectedIndex()), email.toString(), password.toString(), message.getTitle(), message.getBody(), recipients, this::updateHistory, mStage);
             } catch (AddressException e) {
                 e.printStackTrace();
             }
@@ -293,6 +326,16 @@ public class MainWindowController implements Initializable {
             hashMap.put(contact.getPhone(), message.getBody());
         }
 
-        Platform.runLater(() -> new Thread(() -> WhatsAppAPI.getInstance().sendMessages(hashMap)).start());
+        Platform.runLater(() -> new Thread(() -> WhatsAppAPI.getInstance().sendMessages(data.get(contactsListView.getSelectionModel().getSelectedIndex()), hashMap, this::updateHistory)).start());
+    }
+
+    @SuppressWarnings("ALL")
+    private void updateHistory() {
+        if (contactsListView.getSelectionModel().getSelectedIndex() == -1) return;
+        historyListView.setItems(null);
+        ObservableList<Message> messages = FXCollections.observableArrayList();
+        messages.addAll(data.get(contactsListView.getSelectionModel().getSelectedIndex()).getMessages());
+        Collections.reverse(messages);
+        historyListView.setItems(messages);
     }
 }

@@ -7,10 +7,10 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
 
 <JFXTabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <tabs>
@@ -78,11 +78,14 @@
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </VBox.margin>
                         </JFXTextField>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                        <HBox alignment="BOTTOM_RIGHT" prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <JFXButton fx:id="saveEmailSettingsButton" layoutX="534.0" layoutY="85.0" style="-fx-background-color: #276899;" text="Save" textFill="WHITE" />
+                              <JFXButton fx:id="saveEmailSettingsButton" style="-fx-background-color: #276899;" text="Save" textFill="WHITE">
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </HBox.margin></JFXButton>
                            </children>
-                        </AnchorPane>
+                        </HBox>
                      </children>
                   </VBox>
                </children>
@@ -99,6 +102,47 @@
                      </font>
                   </Text>
                   <VBox prefHeight="200.0" prefWidth="100.0" />
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
+      <Tab text="Excel File">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="600.0">
+               <children>
+                  <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="600.0">
+                     <children>
+                        <JFXTextField fx:id="nameColumnTextField" focusColor="#276899" labelFloat="true" promptText="Name Column Title">
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="30.0" />
+                           </VBox.margin>
+                        </JFXTextField>
+                        <JFXTextField fx:id="apartmentColumnTextField" focusColor="#276899" labelFloat="true" promptText="Apartment Number Column Title">
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="15.0" />
+                           </VBox.margin>
+                        </JFXTextField>
+                        <JFXTextField fx:id="phoneColumnTextField" focusColor="#276899" labelFloat="true" promptText="Phone Column Title">
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="15.0" />
+                           </VBox.margin>
+                        </JFXTextField>
+                        <JFXTextField fx:id="emailColumnTextField" focusColor="#276899" labelFloat="true" promptText="Email Column Title">
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="15.0" />
+                           </VBox.margin>
+                        </JFXTextField>
+                        <HBox alignment="BOTTOM_RIGHT" prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <JFXButton fx:id="saveExcelSettingsButton" ripplerFill="WHITE" style="-fx-background-color: #276899;" text="Save" textFill="WHITE">
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </HBox.margin>
+                              </JFXButton>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
                </children>
             </AnchorPane>
         </content>

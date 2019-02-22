@@ -1,7 +1,11 @@
 package omarihamza.utils;
 
 import javafx.scene.control.Alert;
+import javafx.stage.Stage;
+import omarihamza.callbacks.RefreshHistoryCallback;
 import omarihamza.models.AppSettings;
+import omarihamza.models.Group;
+import omarihamza.models.MessageType;
 
 import javax.mail.*;
 import javax.mail.internet.AddressException;
@@ -13,7 +17,7 @@ import java.util.Properties;
 public class EmailAPI {
 
 
-    public static void sendEmail(String email, String password, String title, String body, ArrayList<String> recipients) throws AddressException {
+    public static void sendEmail(Group group, String email, String password, String title, String body, ArrayList<String> recipients, RefreshHistoryCallback historyCallback, Stage mStage) throws AddressException {
 
 
         AppSettings appSettings = FileUtils.loadSettings();
@@ -52,10 +56,17 @@ public class EmailAPI {
 
             Utils.showPopup("Success", "Email sent successfully to " + recipients.size() + " recipients.", Alert.AlertType.INFORMATION);
 
+
+            group.getMessages().add(new omarihamza.models.Message(title, body, MessageType.Email));
+            FileUtils.updateGroup(group);
+            historyCallback.refreshHistory();
+
+            mStage.close();
+
         } catch (MessagingException e) {
+            mStage.close();
             e.printStackTrace();
             Utils.showPopup("Error", "Email was not sent.\n" + e.getMessage(), Alert.AlertType.ERROR);
-
         }
     }
 

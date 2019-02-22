@@ -37,6 +37,22 @@ public class SettingsController implements Initializable {
     @FXML
     private JFXButton saveWhatsAppSettingsButton;
 
+
+    @FXML
+    private JFXTextField nameColumnTextField;
+
+    @FXML
+    private JFXTextField apartmentColumnTextField;
+
+    @FXML
+    private JFXTextField phoneColumnTextField;
+
+    @FXML
+    private JFXTextField emailColumnTextField;
+
+    @FXML
+    private JFXButton saveExcelSettingsButton;
+
     private AppSettings appSettings;
 
     @Override
@@ -57,6 +73,10 @@ public class SettingsController implements Initializable {
             portTextField.setText(appSettings.getPort());
             hostTextField.setText(appSettings.getHost());
             whatsAppTimeoutTextField.setText(appSettings.getWhatsAppTimeout() + "");
+            nameColumnTextField.setText(appSettings.getNameColumn());
+            phoneColumnTextField.setText(appSettings.getPhoneColumn());
+            emailColumnTextField.setText(appSettings.getEmailColumn());
+            apartmentColumnTextField.setText(appSettings.getApartmentColumn());
         }
     }
 
@@ -93,6 +113,30 @@ public class SettingsController implements Initializable {
             }
             FileUtils.storeSettings(appSettings);
             ((Stage) saveEmailSettingsButton.getScene().getWindow()).close();
+        });
+
+        saveExcelSettingsButton.setOnAction(e -> {
+
+            if (appSettings == null) {
+                appSettings = new AppSettings();
+            }
+
+            if (nameColumnTextField.getText().isEmpty()
+                    || apartmentColumnTextField.getText().isEmpty()
+                    || phoneColumnTextField.getText().isEmpty()
+                    || emailColumnTextField.getText().isEmpty()) {
+                Utils.showPopup("Error", "Please specify all columns and try again", Alert.AlertType.ERROR);
+                return;
+            }
+
+            appSettings.setNameColumn(nameColumnTextField.getText());
+            appSettings.setEmailColumn(emailColumnTextField.getText());
+            appSettings.setApartmentColumn(apartmentColumnTextField.getText());
+            appSettings.setPhoneColumn(phoneColumnTextField.getText());
+
+            FileUtils.storeSettings(appSettings);
+
+            ((Stage) saveExcelSettingsButton.getScene().getWindow()).close();
         });
     }
 }

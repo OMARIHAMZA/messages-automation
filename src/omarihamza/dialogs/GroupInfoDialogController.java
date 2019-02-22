@@ -2,40 +2,33 @@ package omarihamza.dialogs;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
-import javafx.application.Platform;
+import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.util.Callback;
-import omarihamza.cells.ContactListCell;
 import omarihamza.models.Contact;
 import omarihamza.models.Group;
 import omarihamza.utils.FileUtils;
 import omarihamza.utils.Utils;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import static omarihamza.utils.Utils.listContainsContact;
 
 public class GroupInfoDialogController implements Initializable {
 
     private Group group;
 
     @FXML
-    private Text groupTitleTextView;
+    private JFXTextField groupTitleTextView;
 
     @FXML
     private Text groupMembersTextView;
@@ -74,17 +67,38 @@ public class GroupInfoDialogController implements Initializable {
                     protected void updateItem(Contact item, boolean empty) {
                         super.updateItem(item, empty);
                         Text name = new Text();
+                        Text apartmentNo = new Text();
                         Text phone = new Text();
                         Text email = new Text();
-                        HBox content = new HBox(name, phone, email);
+                        HBox content = new HBox(name, apartmentNo, phone, email);
                         content.setSpacing(10);
 
                         ContextMenu contextMenu = new ContextMenu();
+                        MenuItem modify = new MenuItem("Modify");
                         MenuItem delete = new MenuItem("Delete");
                         delete.setOnAction(e -> {
                             if (!getListView().getItems().isEmpty())
                                 deleteContact(getIndex());
                         });
+                        modify.setOnAction(e -> {
+                            if (getListView().getItems().isEmpty()) return;
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/omarihamza/layouts/ModifyContactDialog.fxml"));
+                            ModifyContactController contactController = new ModifyContactController();
+                            contactController.setmContact(contacts.get(getIndex()));
+                            loader.setController(contactController);
+                            Utils.createDialog(loader, "Modify Contact", ez -> {
+                                if (!contactController.isUpdateContact()) return;
+                                Contact updatedContact = contactController.getUpdatedContact();
+                                contacts.get(getIndex()).setName(updatedContact.getName());
+                                contacts.get(getIndex()).setApartmentNumber(updatedContact.getApartmentNumber());
+                                contacts.get(getIndex()).setEmail(updatedContact.getEmail());
+                                contacts.get(getIndex()).setPhone(updatedContact.getPhone());
+                                FileUtils.updateGroup(group);
+                                groupMembersListView.setItems(null);
+                                groupMembersListView.setItems(contacts);
+                            });
+                        });
+                        contextMenu.getItems().add(modify);
                         contextMenu.getItems().add(delete);
                         content.setOnContextMenuRequested(event -> {
                             contextMenu.show(content.getParent(), event.getScreenX(), event.getScreenY());
@@ -92,6 +106,7 @@ public class GroupInfoDialogController implements Initializable {
 
                         if (item != null && !empty) { // <== test for null item and empty parameter
                             name.setText(item.getName());
+                            apartmentNo.setText("Apartment: " + item.getApartmentNumber());
                             phone.setText(item.getPhone());
                             email.setText(item.getEmail());
                             setGraphic(content);
@@ -127,7 +142,7 @@ public class GroupInfoDialogController implements Initializable {
                     ArrayList<Group> groups = controller.getSelectedGroups();
                     for (Group group : groups) {
                         for (Contact contact : group.getContacts()) {
-                            if (!containsContact(contacts, contact)) {
+                            if (!listContainsContact(contacts, contact)) {
                                 contacts.add(contact);
                             }
                         }
@@ -157,20 +172,21 @@ public class GroupInfoDialogController implements Initializable {
 
         });
 
+        excelImportButton.setOnAction(e -> {
+            int counter = Utils.readContactsFromExcelFile(contacts, excelImportButton.getScene().getWindow());
+            if (counter == -1) return;
+            ArrayList<Contact> mContacts = new ArrayList<>(contacts);
+            group.setContacts(mContacts);
+            FileUtils.updateGroup(group);
+            groupMembersListView.setItems(contacts);
+            groupMembersTextView.setText(contacts.size() + " members");
+            Utils.showPopup("Success", "Successfully added " + counter + " contacts", Alert.AlertType.INFORMATION);
+        });
+
     }
 
     public void setGroup(Group group) {
         this.group = group;
-
     }
 
-    private boolean containsContact(ObservableList<Contact> contacts, Contact mContact) {
-        for (Contact contact : contacts) {
-            if (contact.getEmail().equals(mContact.getEmail())
-                    && contact.getPhone().equals(mContact.getPhone())) {
-                return true;
-            }
-        }
-        return false;
-    }
 }

@@ -11,20 +11,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import omarihamza.cells.ContactListCell;
 import omarihamza.models.Contact;
 import omarihamza.models.Group;
 import omarihamza.utils.FileUtils;
+import omarihamza.utils.Utils;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import static omarihamza.utils.Utils.listContainsContact;
 
 public class CreateGroupDialogController implements Initializable {
 
@@ -60,14 +62,14 @@ public class CreateGroupDialogController implements Initializable {
 
     }
 
+    @SuppressWarnings("ALL")
     private void assignActions() {
 
         excelImportButton.setOnAction(e -> {
-
-            FileChooser fileChooser = new FileChooser();
-            File selectedFile = fileChooser.showOpenDialog(excelImportButton.getScene().getWindow());
-
-            data.add(new Contact("Andrew", "+1123658963", "andrew@testt.com"));
+            int counter = Utils.readContactsFromExcelFile(data, excelImportButton.getScene().getWindow());
+            if (counter == -1) return;
+            membersListView.setItems(data);
+            Utils.showPopup("Success", "Successfully added " + counter + " contacts", Alert.AlertType.INFORMATION);
         });
 
         groupImportButton.setOnAction(e -> {
@@ -91,7 +93,7 @@ public class CreateGroupDialogController implements Initializable {
                     ArrayList<Group> groups = controller.getSelectedGroups();
                     for (Group group : groups) {
                         for (Contact contact : group.getContacts()) {
-                            if (!containsContact(data, contact)) {
+                            if (!listContainsContact(data, contact)) {
                                 data.add(contact);
                             }
                         }
@@ -99,17 +101,9 @@ public class CreateGroupDialogController implements Initializable {
                     membersListView.setItems(data);
                 }
             });
+
             stage.showAndWait();
 
-            /*for (Group group : FileUtils.loadGroups()) {
-                for (Contact contact : group.getContacts()) {
-                    if (!containsContact(data, contact)) {
-                        data.add(contact);
-                    }
-                }
-            }
-            membersListView.setItems(data);
-            membersText.setText(data.size() + " Members");*/
         });
 
         createGroupButton.setOnAction(e -> {
@@ -128,13 +122,4 @@ public class CreateGroupDialogController implements Initializable {
         return !groupNameTextField.getText().isEmpty();
     }
 
-    private boolean containsContact(ObservableList<Contact> contacts, Contact mContact) {
-        for (Contact contact : contacts) {
-            if (contact.getEmail().equals(mContact.getEmail())
-                    && contact.getPhone().equals(mContact.getPhone())) {
-                return true;
-            }
-        }
-        return false;
-    }
 }

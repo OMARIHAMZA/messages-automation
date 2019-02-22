@@ -16,11 +16,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="rootView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #F1F1F1;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="omarihamza.controllers.MainWindowController">
+<AnchorPane fx:id="rootView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #F1F1F1;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="omarihamza.controllers.MainWindowController">
     <children>
-        <Pane prefHeight="500.0" prefWidth="200.0" style="-fx-background-color: #276899;">
+        <Pane prefHeight="600.0" prefWidth="200.0" style="-fx-background-color: #276899;">
             <children>
-                <VBox alignment="CENTER" prefHeight="500.0" prefWidth="200.0">
+                <VBox alignment="CENTER" prefHeight="600.0" prefWidth="200.0">
                     <children>
                         <HBox alignment="CENTER_LEFT" prefWidth="200.0" spacing="10.0">
                             <padding>
@@ -143,34 +143,29 @@
                 </VBox>
             </children>
         </Pane>
-        <Text fx:id="exitText" fill="#276899" layoutX="772.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="X">
+        <Text fx:id="exitText" fill="#276899" layoutX="872.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="X">
             <font>
                 <Font name="Arial Bold" size="20.0" />
             </font>
         </Text>
-        <VBox layoutX="200.0" layoutY="40.0" prefHeight="460.0" prefWidth="200.0" style="-fx-background-color: #F1F1F1;">
+        <VBox layoutX="200.0" layoutY="40.0" prefHeight="560.0" prefWidth="250.0" style="-fx-background-color: #F1F1F1;">
             <children>
-                <JFXTextField fx:id="searchTextField" focusColor="#14a4e4" prefHeight="26.0" prefWidth="200.0" promptText="Search">
+                <JFXTextField fx:id="searchTextField" focusColor="#14a4e4" prefHeight="23.0" prefWidth="200.0" promptText="Search">
                     <VBox.margin>
-                        <Insets bottom="20.0" left="25.0" right="25.0" top="5.0" />
+                        <Insets bottom="16.0" left="25.0" right="25.0" top="5.0" />
                     </VBox.margin>
                 </JFXTextField>
-            <Separator prefWidth="200.0" style="-fx-background-color: #ffffff;">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </Separator>
-            <HBox prefHeight="409.0" prefWidth="200.0">
+            <HBox prefHeight="512.0" prefWidth="250.0" style="-fx-background-color: #ffffff;">
                <children>
-                      <ListView fx:id="contactsListView" prefHeight="409.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" />
+                      <ListView fx:id="contactsListView" prefHeight="509.0" prefWidth="250.0" style="-fx-background-color: #ffffff;" />
                   <Separator orientation="VERTICAL" prefHeight="401.0" prefWidth="1.0" style="-fx-background-color: #ffffff;" />
                </children>
             </HBox>
             </children>
         </VBox>
-        <VBox layoutX="397.0" layoutY="40.0" prefHeight="460.0" prefWidth="400.0" style="-fx-background-color: #E9EDF0;">
+        <VBox layoutX="449.0" layoutY="40.0" prefHeight="560.0" prefWidth="450.0" style="-fx-background-color: #E9EDF0;">
             <children>
-                <HBox fx:id="groupTitleHBox" alignment="CENTER" prefHeight="63.0" prefWidth="400.0" style="-fx-background-color: #F1F1F1;">
+                <HBox fx:id="groupTitleHBox" alignment="CENTER" prefHeight="65.0" prefWidth="400.0" style="-fx-background-color: #F1F1F1;">
                     <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="380.0">
                      <children>
@@ -184,9 +179,9 @@
                               </Text>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="20.0">
+                  <HBox fx:id="dotsImageHbox" alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="20.0">
                      <children>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="dotsImage" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../resources/menu.png" />
                            </image>
@@ -207,16 +202,11 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
                 </HBox>
-            <Separator prefWidth="200.0" style="-fx-background-color: #ffffff;">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </Separator>
-            <VBox prefHeight="421.0" prefWidth="400.0">
+            <VBox prefHeight="521.0" prefWidth="400.0">
                <children>
-                      <VBox alignment="BOTTOM_CENTER" prefHeight="409.0" prefWidth="400.0" style="-fx-background-color: #ffffff;">
+                      <VBox alignment="BOTTOM_CENTER" prefHeight="509.0" prefWidth="400.0" style="-fx-background-color: #ffffff;">
                           <children>
-                        <JFXListView fx:id="historyListView" prefHeight="370.0" prefWidth="400.0" />
+                        <JFXListView fx:id="historyListView" prefHeight="600.0" prefWidth="400.0" visible="false" />
                               <HBox alignment="CENTER_RIGHT" prefHeight="60.0">
                                   <children>
                                       <JFXButton fx:id="sendMessageButton" mnemonicParsing="false" ripplerFill="WHITE" style="-fx-background-color: #276899;" text="Send Message" textFill="WHITE">
@@ -235,5 +225,6 @@
             </VBox>
             </children>
         </VBox>
+      <Separator prefWidth="700.0" translateX="200.0" translateY="90.0" />
     </children>
 </AnchorPane>

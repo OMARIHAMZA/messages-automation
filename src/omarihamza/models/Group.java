@@ -10,6 +10,7 @@ public class Group implements Serializable {
     private String title;
     private String description;
     private ArrayList<Contact> contacts;
+    private ArrayList<Message> messages;
     private boolean isSelected;
 
 
@@ -18,6 +19,15 @@ public class Group implements Serializable {
         this.title = title;
         this.description = description;
         this.contacts = contacts;
+        this.messages = new ArrayList<>();
+    }
+
+    public ArrayList<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(ArrayList<Message> messages) {
+        this.messages = messages;
     }
 
     public int getId() {
