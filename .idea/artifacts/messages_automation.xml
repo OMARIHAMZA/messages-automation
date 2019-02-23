@@ -16,16 +16,34 @@
       <element id="archive" name="messages_automation.jar">
         <element id="module-output" name="messages-automation" />
       </element>
-      <element id="file-copy" path="$USER_HOME$/Downloads/activation-1.1.1.jar" />
-      <element id="file-copy" path="$USER_HOME$/Desktop/libs/byte-buddy-1.8.15.jar" />
-      <element id="file-copy" path="$USER_HOME$/Desktop/client-combined-3.141.59.jar" />
-      <element id="file-copy" path="$USER_HOME$/Desktop/libs/commons-exec-1.3.jar" />
-      <element id="file-copy" path="$USER_HOME$/Desktop/libs/guava-25.0-jre.jar" />
-      <element id="file-copy" path="$USER_HOME$/Desktop/java-mail-1.4.4.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/byte-buddy-1.8.15.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/commons-exec-1.3.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/guava-25.0-jre.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/okhttp-3.11.0.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/okio-1.14.0.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/selenium-java-3.141.59.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/mail-1.4.4.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/commons-compress-1.17.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/client-combined-3.141.59.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/xlsx-streamer-1.2.0.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/excel/ant-1.8.2.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/excel/ant-launcher-1.8.2.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/excel/commons-codec-1.10.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/excel/commons-collections4-4.1.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/excel/commons-lang3-3.4.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/excel/curvesapi-1.04.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/excel/logback-classic-1.1.2.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/excel/logback-core-1.1.2.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/excel/poi-3.17.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/excel/poi-excelant-3.17.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/excel/poi-ooxml-3.17.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/excel/poi-ooxml-schemas-3.17.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/excel/slf4j-api-1.7.6.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/excel/stax-api-1.0.1.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/excel/xmlbeans-2.6.0.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/excel/zerocell-core-0.3.2.jar" />
+      <element id="file-copy" path="$USER_HOME$/Downloads/jfoenix-9.0.8.jar" />
       <element id="file-copy" path="$USER_HOME$/Downloads/jfoenix-8.0.8.jar" />
-      <element id="file-copy" path="$USER_HOME$/Desktop/libs/okhttp-3.11.0.jar" />
-      <element id="file-copy" path="$USER_HOME$/Desktop/libs/okio-1.14.0.jar" />
-      <element id="file-copy" path="$USER_HOME$/Downloads/retrofit-2.5.0.jar" />
     </root>
   </artifact>
 </component>

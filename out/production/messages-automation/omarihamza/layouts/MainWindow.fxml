@@ -20,127 +20,126 @@
     <children>
         <Pane prefHeight="600.0" prefWidth="200.0" style="-fx-background-color: #276899;">
             <children>
-                <VBox alignment="CENTER" prefHeight="600.0" prefWidth="200.0">
-                    <children>
-                        <HBox alignment="CENTER_LEFT" prefWidth="200.0" spacing="10.0">
-                            <padding>
-                                <Insets bottom="40.0" right="10.0" top="10.0" />
-                            </padding>
-                        </HBox>
-                        <HBox fx:id="contactsBox" alignment="CENTER_LEFT" prefWidth="200.0" spacing="10.0">
-                            <children>
-                                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../resources/contact.png" />
-                                    </image>
-                                </ImageView>
-                                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Contacts" textAlignment="CENTER">
-                                    <HBox.margin>
-                                        <Insets />
-                                    </HBox.margin>
-                                </Text>
-                            </children>
-                            <VBox.margin>
-                                <Insets bottom="100.0" left="10.0" />
-                            </VBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                        </HBox>
-                  <HBox fx:id="newGroupBox" alignment="CENTER_LEFT" prefWidth="200.0" spacing="10.0">
+            <VBox prefHeight="600.0" prefWidth="200.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="300.0" prefWidth="100.0">
                      <children>
-                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="150.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../resources/add.png" />
+                              <Image url="@../resources/logo.png" />
                            </image>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
                         </ImageView>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="New Group" textAlignment="CENTER">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Text>
                      </children>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                        <HBox fx:id="importBox" alignment="CENTER_LEFT" prefWidth="200.0" spacing="10.0">
-                            <children>
-                                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../resources/import.png" />
-                                    </image>
-                                </ImageView>
-                                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Import" textAlignment="CENTER">
-                                    <HBox.margin>
-                                        <Insets />
-                                    </HBox.margin>
-                                </Text>
-                            </children>
-                            <padding>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </padding>
-                            <VBox.margin>
-                                <Insets bottom="10.0" />
-                            </VBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                  </VBox>
+                      <VBox alignment="CENTER" prefHeight="300.0" prefWidth="200.0">
+                          <children>
+                              <HBox alignment="CENTER_LEFT" prefWidth="200.0" spacing="10.0">
+                                  <padding>
+                                      <Insets bottom="40.0" right="10.0" top="10.0" />
+                                  </padding>
+                              </HBox>
+                        <HBox fx:id="newGroupBox" alignment="CENTER_LEFT" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/add.png" />
+                                 </image>
+                              </ImageView>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="New Group" textAlignment="CENTER">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Text>
+                           </children>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" />
+                           </VBox.margin>
                         </HBox>
-                        <HBox fx:id="settingsBox" alignment="CENTER_LEFT" prefWidth="200.0" spacing="10.0">
-                            <children>
-                                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../resources/m_settings.png" />
-                                    </image>
-                                </ImageView>
-                                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" textAlignment="CENTER">
-                                    <HBox.margin>
-                                        <Insets />
-                                    </HBox.margin>
-                                </Text>
-                            </children>
-                            <padding>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </padding>
-                            <VBox.margin>
-                                <Insets bottom="10.0" />
-                            </VBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                        </HBox>
-                        <HBox fx:id="logoutBox" alignment="CENTER_LEFT" prefWidth="200.0" spacing="10.0">
-                            <children>
-                                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../resources/logout.png" />
-                                    </image>
-                                </ImageView>
-                                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Logout" textAlignment="CENTER">
-                                    <HBox.margin>
-                                        <Insets />
-                                    </HBox.margin>
-                                </Text>
-                            </children>
-                            <padding>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </padding>
-                            <VBox.margin>
-                                <Insets bottom="10.0" />
-                            </VBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                        </HBox>
-                    </children>
-                    <padding>
-                        <Insets left="10.0" />
-                    </padding>
-                </VBox>
+                              <HBox fx:id="importBox" alignment="CENTER_LEFT" prefWidth="200.0" spacing="10.0">
+                                  <children>
+                                      <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                          <image>
+                                              <Image url="@../resources/import.png" />
+                                          </image>
+                                      </ImageView>
+                                      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Import" textAlignment="CENTER">
+                                          <HBox.margin>
+                                              <Insets />
+                                          </HBox.margin>
+                                      </Text>
+                                  </children>
+                                  <padding>
+                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                  </padding>
+                                  <VBox.margin>
+                                      <Insets bottom="10.0" />
+                                  </VBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                              </HBox>
+                              <HBox fx:id="settingsBox" alignment="CENTER_LEFT" prefWidth="200.0" spacing="10.0">
+                                  <children>
+                                      <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                          <image>
+                                              <Image url="@../resources/m_settings.png" />
+                                          </image>
+                                      </ImageView>
+                                      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" textAlignment="CENTER">
+                                          <HBox.margin>
+                                              <Insets />
+                                          </HBox.margin>
+                                      </Text>
+                                  </children>
+                                  <padding>
+                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                  </padding>
+                                  <VBox.margin>
+                                      <Insets bottom="10.0" />
+                                  </VBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                              </HBox>
+                              <HBox fx:id="logoutBox" alignment="CENTER_LEFT" prefWidth="200.0" spacing="10.0">
+                                  <children>
+                                      <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                          <image>
+                                              <Image url="@../resources/logout.png" />
+                                          </image>
+                                      </ImageView>
+                                      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Logout" textAlignment="CENTER">
+                                          <HBox.margin>
+                                              <Insets />
+                                          </HBox.margin>
+                                      </Text>
+                                  </children>
+                                  <padding>
+                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                  </padding>
+                                  <VBox.margin>
+                                      <Insets bottom="10.0" />
+                                  </VBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                              </HBox>
+                          </children>
+                          <padding>
+                              <Insets left="10.0" />
+                          </padding>
+                      </VBox>
+               </children>
+            </VBox>
             </children>
         </Pane>
         <Text fx:id="exitText" fill="#276899" layoutX="872.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="X">

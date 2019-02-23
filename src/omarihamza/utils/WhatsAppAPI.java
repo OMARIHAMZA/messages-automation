@@ -18,6 +18,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -124,7 +125,7 @@ public class WhatsAppAPI {
         Platform.runLater(historyCallback::refreshHistory);
 
         if (!invalidContacts.isEmpty()) {
-            File file = new File(System.getProperty("user.home") + "/Desktop/invalid_whatsapp_contacts.txt");
+            File file = new File(System.getProperty("user.home") + "/Desktop/WhatsApp_" + group.getTitle() + ".txt");
             try {
                 file.createNewFile();
                 StringBuilder fileContent = new StringBuilder();

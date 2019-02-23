@@ -14,7 +14,7 @@ public class Message implements Serializable {
     public Message(String title, String body, MessageType type) {
         this.title = title;
         this.body = body;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
         this.date = simpleDateFormat.format(Calendar.getInstance().getTime());
         this.type = type;
     }

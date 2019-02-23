@@ -37,15 +37,6 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/jfoenix-8.0.8 (1).jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
           <root url="jar://$MODULE_DIR$/libs/okhttp-3.11.0.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -245,6 +236,15 @@
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/libs/excel/zerocell-core-0.3.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/jfoenix-8.0.8.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

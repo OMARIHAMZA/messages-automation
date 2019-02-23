@@ -248,7 +248,16 @@ public class MainWindowController implements Initializable {
             stage.show();
         });
 
-
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            ObservableList<Group> filteredGroups = FXCollections.observableArrayList();
+            for (Group group: data){
+                if (group.getTitle().trim().toLowerCase().contains(newValue.trim().toLowerCase())){
+                    filteredGroups.add(group);
+                }
+            }
+            contactsListView.setItems(null);
+            contactsListView.setItems(filteredGroups);
+        });
     }
 
     private void sendEmail(Message message) {

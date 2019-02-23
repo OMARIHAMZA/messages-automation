@@ -7,6 +7,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import omarihamza.models.Message;
+import omarihamza.models.MessageType;
 
 
 public class HistoryListCell extends ListCell<Message> {
@@ -24,7 +25,7 @@ public class HistoryListCell extends ListCell<Message> {
         type = new Text();
         date = new Text();
 
-        title.setStyle("-fx-fill: white;");
+        title.setStyle("-fx-fill: white; -fx-font-weight: bold");
         body.setStyle("-fx-fill: white;");
         type.setStyle("-fx-fill: white;");
         date.setStyle("-fx-fill: white;");
@@ -45,8 +46,8 @@ public class HistoryListCell extends ListCell<Message> {
 
         hBox.getChildren().addAll(typeBox);
 
-        VBox mVBox = new VBox(10);
-        mVBox.getChildren().addAll(title, body, hBox);
+        VBox mVBox = new VBox(5);
+        mVBox.getChildren().addAll(body, hBox);
         mVBox.setBackground(new Background(new BackgroundFill(Paint.valueOf("#419FD9"), new CornerRadii(10, 10, 10, 0, false), Insets.EMPTY)));
         mVBox.setPadding(new Insets(5));
         mVBox.setBorder(new Border(new BorderStroke(Paint.valueOf("#419FD9"), BorderStrokeStyle.SOLID, new CornerRadii(10, 10, 10, 0, false), new BorderWidths(0.1))));
@@ -61,11 +62,10 @@ public class HistoryListCell extends ListCell<Message> {
     protected void updateItem(Message item, boolean empty) {
         super.updateItem(item, empty);
         if (item != null && !empty) { // <== test for null item and empty parameter
-            title.setText(item.getTitle());
-            body.setText(item.getBody());
-            if (item.getTitle() == null && !isRemoved) {
-                isRemoved = true;
-                ((VBox) content.getChildren().get(0)).getChildren().remove(0);
+            if (item.getTitle() == null) {
+                body.setText(item.getBody());
+            } else {
+                body.setText(item.getTitle() + "\n\n" + item.getBody());
             }
             date.setText(item.getDate());
             type.setText("• Type: " + item.getType().toString() + " \t\t\t");
