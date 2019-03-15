@@ -37,11 +37,16 @@
         </JFXListView>
         <HBox prefWidth="200.0">
             <children>
-                <JFXButton fx:id="excelImportButton" ripplerFill="WHITE" style="-fx-background-color: #276899;" text="Import from Excel" textFill="WHITE">
+                <JFXButton fx:id="addContactButton" ripplerFill="WHITE" style="-fx-background-color: #276899;" text="Add Contact" textFill="WHITE">
                     <HBox.margin>
                         <Insets left="50.0" top="10.0" />
                     </HBox.margin>
                 </JFXButton>
+            <JFXButton fx:id="excelImportButton" ripplerFill="WHITE" style="-fx-background-color: #276899;" text="Import from Excel" textFill="WHITE">
+               <HBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </HBox.margin>
+            </JFXButton>
                 <JFXButton fx:id="groupImportButton" style="-fx-background-color: #276899;" text="Import From Group" textFill="WHITE">
                     <HBox.margin>
                         <Insets left="10.0" top="10.0" />

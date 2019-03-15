@@ -59,7 +59,7 @@ public class ModifyContactController implements Initializable {
     private void showData() {
         nameTextField.setText(mContact.getName());
         phoneTextField.setText(mContact.getPhone());
-        apartmentNumberTextField.setText(mContact.getApartmentNumber());
+        apartmentNumberTextField.setText(mContact.getHouseNumber());
         emailTextField.setText(mContact.getEmail());
     }
 

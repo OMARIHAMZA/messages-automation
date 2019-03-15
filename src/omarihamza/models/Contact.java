@@ -7,13 +7,13 @@ public class Contact implements Serializable {
     private String name;
     private String phone;
     private String email;
-    private String apartmentNumber;
+    private String houseNumber;
 
-    public Contact(String name, String phone, String email, String apartmentNumber) {
+    public Contact(String name, String phone, String email, String houseNumber) {
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.apartmentNumber = apartmentNumber;
+        this.houseNumber = houseNumber;
     }
 
     public Contact() {
@@ -43,11 +43,11 @@ public class Contact implements Serializable {
         this.email = email;
     }
 
-    public String getApartmentNumber() {
-        return apartmentNumber;
+    public String getHouseNumber() {
+        return houseNumber;
     }
 
-    public void setApartmentNumber(String apartmentNumber) {
-        this.apartmentNumber = apartmentNumber;
+    public void setHouseNumber(String houseNumber) {
+        this.houseNumber = houseNumber;
     }
 }

@@ -90,7 +90,7 @@ public class GroupInfoDialogController implements Initializable {
                                 if (!contactController.isUpdateContact()) return;
                                 Contact updatedContact = contactController.getUpdatedContact();
                                 contacts.get(getIndex()).setName(updatedContact.getName());
-                                contacts.get(getIndex()).setApartmentNumber(updatedContact.getApartmentNumber());
+                                contacts.get(getIndex()).setHouseNumber(updatedContact.getHouseNumber());
                                 contacts.get(getIndex()).setEmail(updatedContact.getEmail());
                                 contacts.get(getIndex()).setPhone(updatedContact.getPhone());
                                 FileUtils.updateGroup(group);
@@ -106,7 +106,7 @@ public class GroupInfoDialogController implements Initializable {
 
                         if (item != null && !empty) { // <== test for null item and empty parameter
                             name.setText(item.getName());
-                            apartmentNo.setText("Apartment: " + item.getApartmentNumber());
+                            apartmentNo.setText("House: " + item.getHouseNumber());
                             phone.setText(item.getPhone());
                             email.setText(item.getEmail());
                             setGraphic(content);

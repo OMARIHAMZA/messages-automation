@@ -23,16 +23,6 @@
             <VBox prefHeight="600.0" prefWidth="200.0">
                <children>
                   <VBox alignment="CENTER" prefHeight="300.0" prefWidth="100.0">
-                     <children>
-                        <ImageView fitHeight="150.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../resources/logo.png" />
-                           </image>
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                        </ImageView>
-                     </children>
                      <padding>
                         <Insets top="10.0" />
                      </padding>

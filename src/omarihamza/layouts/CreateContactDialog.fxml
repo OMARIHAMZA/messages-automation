@@ -13,7 +13,7 @@
             </VBox.margin>
         </JFXTextField>
 
-        <JFXTextField fx:id="apartmentNumberTextField" focusColor="#276899" labelFloat="true" promptText="Apartment Number">
+        <JFXTextField fx:id="apartmentNumberTextField" focusColor="#276899" labelFloat="true" promptText="House Number">
             <VBox.margin>
                 <Insets bottom="10.0" left="30.0" right="30.0" top="15.0" />
             </VBox.margin>
@@ -25,7 +25,7 @@
                 <Insets bottom="10.0" left="30.0" right="30.0" top="15.0" />
             </VBox.margin>
         </JFXTextField>
-        <JFXTextField fx:id="emailTextField" focusColor="#276899" labelFloat="true" promptText="Email">
+        <JFXTextField fx:id="emailTextField" focusColor="#276899" labelFloat="true" promptText="Email (Optional)">
             <VBox.margin>
                 <Insets bottom="20.0" left="30.0" right="30.0" top="15.0" />
             </VBox.margin>

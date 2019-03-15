@@ -79,7 +79,7 @@ public class Utils {
                             new ColumnInfo(appSettings.getNameColumn()/*"الاسم"*/, "name", 0, String.class),
                             new ColumnInfo(/*"رقم الهاتف"*/appSettings.getPhoneColumn(), "phone", 2, String.class),
                             new ColumnInfo(/*"الأيميل"*/appSettings.getEmailColumn(), "email", 1, String.class),
-                            new ColumnInfo(/*"رقم الشقة"*/appSettings.getApartmentColumn(), "apartmentNumber", 3, String.class)
+                            new ColumnInfo(/*"رقم الشقة"*/appSettings.getApartmentColumn(), "houseNumber", 3, String.class)
                     )
                     .sheet("Sheet1")
                     .list();

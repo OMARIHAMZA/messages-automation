@@ -72,6 +72,7 @@ public class WhatsAppAPI {
         for (HashMap.Entry<String, String> entry : messages.entrySet()) {
             String number = entry.getKey();
             String message = entry.getValue();
+            mMessage = message;
             mDriver.get("https://web.whatsapp.com/send?phone=" + number);
             while (true) {
                 try {
@@ -116,7 +117,6 @@ public class WhatsAppAPI {
                 }
             }
             inputBox.sendKeys(Keys.ENTER);
-            mMessage = message;
         }
 
 

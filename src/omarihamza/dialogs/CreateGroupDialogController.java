@@ -51,6 +51,9 @@ public class CreateGroupDialogController implements Initializable {
     @FXML
     private JFXButton createGroupButton;
 
+    @FXML
+    private JFXButton addContactButton;
+
     private ObservableList<Contact> data = FXCollections.observableArrayList();
 
 
@@ -113,6 +116,19 @@ public class CreateGroupDialogController implements Initializable {
                 FileUtils.storeGroup(groupNameTextField.getText(), groupDescriptionTextArea.getText(), contacts);
                 ((Stage) createGroupButton.getScene().getWindow()).close();
             }
+
+        });
+
+        addContactButton.setOnAction(e -> {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/omarihamza/layouts/CreateContactDialog.fxml"));
+            Utils.createDialog(fxmlLoader, "Add Contact", ee -> {
+                CreateContactDialogController controller = fxmlLoader.getController();
+                Contact contact = controller.getContact();
+                if (contact == null) return;
+                data.add(contact);
+                membersListView.setItems(data);
+            });
 
         });
 
