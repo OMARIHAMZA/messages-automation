@@ -19,9 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class WhatsAppAPI {
@@ -32,6 +30,7 @@ public class WhatsAppAPI {
     private static final String DRIVER_NAME = "webdriver.chrome.driver";
     private static boolean isBrowserOpen = false;
     private int timeout;
+
 
     private WhatsAppAPI() {
         AppSettings appSettings = FileUtils.loadSettings();
@@ -77,7 +76,7 @@ public class WhatsAppAPI {
             while (true) {
                 try {
                     mDriver.get("https://web.whatsapp.com/send?phone=" + number);
-                    WebDriverWait wait = new WebDriverWait(mDriver, timeout);
+                    WebDriverWait wait = new WebDriverWait(mDriver, 5);
                     wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"main\"]/footer/div[1]/div[2]/div/div[2]")));
                     break;
                 } catch (Exception e) {
@@ -102,7 +101,6 @@ public class WhatsAppAPI {
                 continue;
             }
             WebElement inputBox = mDriver.findElementByXPath("//*[@id=\"main\"]/footer/div[1]/div[2]/div/div[2]");
-            //noinspection all
             for (int i = 0; i < message.length(); i++) {
                 if (message.charAt(i) == '\n') {
                     Actions actions = new Actions(mDriver);

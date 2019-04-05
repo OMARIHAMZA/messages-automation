@@ -42,8 +42,6 @@
       <element id="file-copy" path="$PROJECT_DIR$/libs/excel/stax-api-1.0.1.jar" />
       <element id="file-copy" path="$PROJECT_DIR$/libs/excel/xmlbeans-2.6.0.jar" />
       <element id="file-copy" path="$PROJECT_DIR$/libs/excel/zerocell-core-0.3.2.jar" />
-      <element id="file-copy" path="$USER_HOME$/Downloads/jfoenix-9.0.8.jar" />
-      <element id="file-copy" path="$USER_HOME$/Downloads/jfoenix-8.0.8.jar" />
     </root>
   </artifact>
 </component>
